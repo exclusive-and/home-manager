@@ -7,6 +7,7 @@
     home.stateVersion = "24.11"; # Check the Home Manager release notes before changing.
 
     home.packages = with pkgs; [
+        gtkwave
         helvum
         pavucontrol
     ];
