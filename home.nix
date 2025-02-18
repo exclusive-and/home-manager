@@ -10,6 +10,7 @@
         gtkwave
         helvum
         pavucontrol
+        (import ./quartus.nix { inherit config pkgs; })
     ];
 
     programs.home-manager.enable = true; # Let Home Manager install and manage itself.
