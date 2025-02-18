@@ -9,11 +9,11 @@ let
         fi
 
         if [ "$1" = "pro" ]; then
-            ${pkgs.nix} run github:Mop-u/nix-quartus#quartus-prime-pro
+            ${pkgs.nix}/bin/nix run github:Mop-u/nix-quartus#quartus-prime-pro
         fi
 
         if [ "$1" = "lite" ]; then
-            ${pkgs.nix} run github:Mop-u/nix-quartus#quartus-prime-lite
+            ${pkgs.nix}/bin/nix run github:Mop-u/nix-quartus#quartus-prime-lite
         fi
     '';
 in
