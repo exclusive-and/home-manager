@@ -1,57 +1,58 @@
 { config, pkgs, ... }:
 
-{
-    home.username = "xand";
-    home.homeDirectory = "/home/xand";
+let
+    username = "xand";
 
-    home.stateVersion = "24.11"; # Check the Home Manager release notes before changing.
+    homeDirectory = "/home/${username}";
 
-    home.packages = with pkgs; [
+    packages = with pkgs; [
+        coppwr # 
         gtkwave
         helvum
-        pavucontrol
-        (import ./quartus.nix { inherit config pkgs; })
+        pwvucontrol
     ];
+
+    xmonad = {
+        config = ./xmonad.hs;
+        enable = true;
+        enableContribAndExtras = true;
+        extraPackages = haskellPackages: [
+            haskellPackages.dbus
+            haskellPackages.xmonad-contrib
+        ];
+    };
+    
+    xsessionInit = ''
+        set +x
+        ${pkgs.util-linux}/bin/setterm -blank 0 -powersave off -powerdown 0
+        ${pkgs.xorg.xset}/bin/xset s off
+    '';
+in
+{
+    home = {
+        inherit username homeDirectory packages;
+        sessionVariables = {
+            DISPLAY = ":0";
+        };
+        stateVersion = "24.11"; # Check the Home Manager release notes before changing.
+    };
+
+    imports = [
+        ./programs/direnv
+        ./programs/firefox
+        ./programs/fish
+        ./programs/git
+        ./programs/vscodium
+        ./services/picom
+    ];
+
+    news.display = "silent";
 
     programs.home-manager.enable = true; # Let Home Manager install and manage itself.
 
-    programs.bash.enable = true;
-
-    programs.direnv = {
+    xsession = {
         enable = true;
-        enableBashIntegration = true;
-        nix-direnv.enable = true;
-    };
-
-    programs.firefox = {
-        enable = true;
-        package = pkgs.firefox;
-    };
-
-    programs.fish.enable = true;
-
-    programs.git = {
-        enable = true;
-        ignores = [
-            ".direnv/"
-            "dist-newstyle/"
-            "obj_dir/"
-        ];
-        userEmail = "exclusiveandgate@gmail.com";
-        userName = "exclusive-and";
-    };
-
-    programs.vscode = {
-        enable = true;
-        enableExtensionUpdateCheck = true;
-        enableUpdateCheck = true;
-        package = pkgs.vscodium;
-        extensions = with pkgs.vscode-extensions; [
-            haskell.haskell
-            jnoortheen.nix-ide
-            llvm-vs-code-extensions.vscode-clangd
-            mkhl.direnv
-            mshr-h.veriloghdl
-        ];
+        initExtra = xsessionInit;
+        windowManager.xmonad = xmonad;
     };
 }
