@@ -15,7 +15,7 @@
             system = "x86_64-linux";
             pkgs = import nixpkgs { inherit system; };
         in {
-            homeConfigurations."xand" = home-manager.lib.homeManagerConfiguration {
+            homeConfigurations."gaming" = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
 
                 # Specify your home configuration modules here, for example,
