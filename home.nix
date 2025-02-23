@@ -4,15 +4,6 @@ let
     username = "gaming";
 
     homeDirectory = "/home/${username}";
-
-    packages = with pkgs; [
-        coppwr # 
-        discord
-        gtkwave
-        helvum
-        pwvucontrol
-    ];
-
     xmonad = {
         config = ./xmonad.hs;
         enable = true;
@@ -22,6 +13,14 @@ let
             haskellPackages.xmonad-contrib
         ];
     };
+
+    packages = with pkgs; [
+        coppwr # 
+        discord
+        gtkwave
+        helvum
+        pwvucontrol
+    ];
     
     xsessionInit = ''
         set +x
