@@ -1,38 +1,61 @@
-import XMonad
+import XMonad (xmonad, (|||))
+import XMonad                       qualified as XMonad
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Fullscreen
-import XMonad.Layout.Gaps
+import XMonad.Layout.Gaps           qualified as XMonad
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Spacing
-import XMonad.Util.SpawnOnce (spawnOnce)
+import XMonad.Layout.Spacing        qualified as XMonad
+import XMonad.Util.SpawnOnce        qualified as XMonad
 
-main = xmonad $ fullscreenSupport $ docks $ ewmh conf 
+main :: IO ()
+main = xmonad . ewmh . ewmhFullscreen $ XMonad.def
+    { XMonad.modMask    = XMonad.mod4Mask       -- 
+    , XMonad.terminal   = "alacritty"
 
-axarvaLayout = layout3
+    -- Whenever .xinitrc invokes me...
+    , XMonad.startupHook = startupHook
+
+    -- Whenever the window arrangement changes...
+    , XMonad.layoutHook = layoutHook
+
+    -- Window borders
+    , XMonad.borderWidth        = 2
+    , XMonad.focusedBorderColor = "#bc96da"     -- Purple-ish
+    , XMonad.normalBorderColor  = "#3b4252"     -- Gray
+
+    -- Mouse focusing behavior
+    , XMonad.clickJustFocuses   = False
+    , XMonad.focusFollowsMouse  = False
+    }
+
+layoutHook =
+    let
+        layout = tiled ||| XMonad.Full
+    in
+        avoidStruts . smartBorders . gaps . spacing 10 $ layout
     where
-        layout3 = gaps [(L, 30), (R, 30), (U, 40), (D, 60)] layout2
-        layout2 = spacingRaw True (Border 10 10 10 10) True (Border 10 10 10 10) True layout1
-        layout1 = smartBorders layout0
+        tiled   = XMonad.Tall nmaster delta ratio
 
-        layout0 = avoidStruts (tiled ||| Mirror tiled ||| Full)
-
-        tiled   = Tall nmaster delta ratio
+        -- Default number of windows in the master pane
         nmaster = 1
+
+        -- Default proportion of the screen taken up by the master pane
         ratio   = 1 / 2
+
+        -- Percent of screen size to increment by when resizing
         delta   = 3 / 100
 
-myStartupHook = do
-    spawn "xsetroot -cursor_name left_ptr"
-    spawnOnce "feh --bg-scale ~/wallpapers/buran.jpg"
+        gaps = XMonad.gaps [(L, 30), (R, 30), (U, 40), (D, 60)]
 
-conf = def  { startupHook = myStartupHook
-            , layoutHook  = axarvaLayout
-            , terminal    = "alacritty"
-            , modMask     = mod4Mask
-            , borderWidth         = 2
-            , normalBorderColor   = "#3b4252"
-            , focusedBorderColor  = "#bc96da"
-            , focusFollowsMouse   = True
-            , clickJustFocuses    = False
-            }
+        spacing = XMonad.smartSpacing
+
+startupHook = do
+    setCursor
+    setWallpaper
+    where
+        setCursor =
+            XMonad.spawn "xsetroot -cursor_name left_ptr"
+
+        setWallpaper =
+            XMonad.spawnOnce "feh --bg-scale $HOME/wallpapers/apollo-soyuz.png"
