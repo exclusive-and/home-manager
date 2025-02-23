@@ -53,6 +53,7 @@ in
     xsession = {
         enable = true;
         initExtra = xsessionInit;
+        scriptPath = ".xinitrc";
         windowManager.xmonad = xmonad;
     };
 }
