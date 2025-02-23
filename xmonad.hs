@@ -25,7 +25,6 @@ axarvaLayout = layout3
 myStartupHook = do
     spawn "xsetroot -cursor_name left_ptr"
     spawnOnce "feh --bg-scale ~/wallpapers/buran.jpg"
-    spawnOnce "fish /etc/nixos/hyperion/xmonad/fixnv.sh"
 
 conf = def  { startupHook = myStartupHook
             , layoutHook  = axarvaLayout
