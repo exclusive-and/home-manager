@@ -1,12 +1,13 @@
 { config, pkgs, ... }:
 
 let
-    username = "xand";
+    username = "gaming";
 
     homeDirectory = "/home/${username}";
 
     packages = with pkgs; [
         coppwr # 
+        discord
         gtkwave
         helvum
         pwvucontrol
