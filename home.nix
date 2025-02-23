@@ -4,6 +4,7 @@ let
     username = "gaming";
 
     homeDirectory = "/home/${username}";
+    
     xmonad = {
         config = ./xmonad.hs;
         enable = true;
