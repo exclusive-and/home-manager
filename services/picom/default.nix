@@ -16,7 +16,6 @@
             detect-rounded-corners = true;
             experimental-backends = false;
             frame-pacing = false;
-            refresh-rate = 0;
             round-borders = 1;
         };
         vSync = true;
