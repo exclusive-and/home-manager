@@ -13,6 +13,11 @@
             url = "github:nix-community/NUR";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+
+        rycee-firefox-addons = {
+            url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = { nixpkgs, home-manager, ... } @ inputs:
@@ -25,6 +30,7 @@
 
             pkgs = import nixpkgs {
                 inherit overlays system;
+                config.allowUnfree = true;
             };
         in
         {
