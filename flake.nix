@@ -2,19 +2,32 @@
     description = "Home Manager configuration of xand";
 
     inputs = {
-        # Specify the source of Home Manager and Nixpkgs.
         nixpkgs.url = "nixpkgs/nixos-24.11";
+
         home-manager = {
             url = "github:nix-community/home-manager/release-24.11";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+
+        nurpkgs = {
+            url = "github:nix-community/NUR";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
-    outputs = { nixpkgs, home-manager, ... }:
+    outputs = { nixpkgs, home-manager, ... } @ inputs:
         let
             system = "x86_64-linux";
-            pkgs = import nixpkgs { inherit system; };
-        in {
+
+            overlays = import ./overlays.nix {
+                inherit inputs system;
+            };
+
+            pkgs = import nixpkgs {
+                inherit overlays system;
+            };
+        in
+        {
             homeConfigurations."xand" = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
 
