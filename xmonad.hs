@@ -51,6 +51,7 @@ keys conf@XConfig {XMonad.modMask = modMask} = Map.fromList $
     -- launching and killing programs
     [ ((modMask .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf) -- %! Launch terminal
     , ((modMask,               xK_p     ), spawn appLauncher) -- %! Launch dmenu
+    , ((modMask,               xK_o     ), spawn appList)
     , ((modMask .|. shiftMask, xK_c     ), kill) -- %! Close the focused window
 
     , ((modMask,               xK_space ), sendMessage NextLayout) -- %! Rotate through the available layout algorithms
@@ -93,6 +94,7 @@ keys conf@XConfig {XMonad.modMask = modMask} = Map.fromList $
     ]
 
 appLauncher = "rofi -modi drun,ssh,window -show drun -show-icons"
+appList     = "rofi -show window -show-icons"
 
 layoutHook =
     let
