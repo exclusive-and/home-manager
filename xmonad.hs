@@ -50,8 +50,8 @@ main = xmonad . ewmh . ewmhFullscreen $ XMonad.def
 keys conf@XConfig {XMonad.modMask = modMask} = Map.fromList $
     -- launching and killing programs
     [ ((modMask .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf) -- %! Launch terminal
-    , ((modMask,               xK_p     ), spawn appLauncher) -- %! Launch dmenu
-    , ((modMask,               xK_o     ), spawn appList)
+    , ((modMask,               xK_Return), spawn appLauncher) -- %! Launch dmenu
+    , ((modMask,               xK_Tab   ), spawn appList)
     , ((modMask .|. shiftMask, xK_c     ), kill) -- %! Close the focused window
 
     , ((modMask,               xK_space ), sendMessage NextLayout) -- %! Rotate through the available layout algorithms
@@ -60,14 +60,18 @@ keys conf@XConfig {XMonad.modMask = modMask} = Map.fromList $
     , ((modMask,               xK_n     ), refresh) -- %! Resize viewed windows to the correct size
 
     -- move focus up or down the window stack
+    {-
     , ((modMask,               xK_Tab   ), windows W.focusDown) -- %! Move focus to the next window
     , ((modMask .|. shiftMask, xK_Tab   ), windows W.focusUp  ) -- %! Move focus to the previous window
+    -}
     , ((modMask,               xK_j     ), windows W.focusDown) -- %! Move focus to the next window
     , ((modMask,               xK_k     ), windows W.focusUp  ) -- %! Move focus to the previous window
     , ((modMask,               xK_m     ), windows W.focusMaster  ) -- %! Move focus to the master window
 
     -- modifying the window order
+    {-
     , ((modMask,               xK_Return), windows W.swapMaster) -- %! Swap the focused window and the master window
+    -}
     , ((modMask .|. shiftMask, xK_j     ), windows W.swapDown  ) -- %! Swap the focused window with the next window
     , ((modMask .|. shiftMask, xK_k     ), windows W.swapUp    ) -- %! Swap the focused window with the previous window
 
