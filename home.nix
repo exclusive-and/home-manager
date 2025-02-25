@@ -39,6 +39,7 @@ in
     };
 
     imports = [
+        ./programs/alacritty
         ./programs/direnv
         ./programs/firefox
         ./programs/fish
