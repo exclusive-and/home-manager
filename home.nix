@@ -10,6 +10,7 @@ let
         enable = true;
         enableContribAndExtras = true;
         extraPackages = haskellPackages: [
+            haskellPackages.containers
             haskellPackages.dbus
             haskellPackages.xmonad-contrib
         ];
@@ -43,6 +44,7 @@ in
         ./programs/firefox
         ./programs/fish
         ./programs/git
+        ./programs/rofi
         ./programs/vscodium
         ./services/picom
     ];
