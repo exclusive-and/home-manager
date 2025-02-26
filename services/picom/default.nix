@@ -16,6 +16,9 @@
             detect-rounded-corners = true;
             experimental-backends = false;
             frame-pacing = false;
+            opacity-rule = [
+                "100:class_g = 'Rofi'"
+            ];
             round-borders = 1;
         };
         vSync = true;
