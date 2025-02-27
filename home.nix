@@ -8,11 +8,11 @@ let
     xmonad = {
         config = ./xmonad.hs;
         enable = true;
-        enableContribAndExtras = true;
         extraPackages = haskellPackages: [
             haskellPackages.containers
             haskellPackages.dbus
-            haskellPackages.xmonad-contrib
+            haskellPackages.xmonad-contrib_0_18_1
+            haskellPackages.xmonad-extras
         ];
     };
 
